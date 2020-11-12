@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
-namespace products_service
+namespace getway
 {
   public class Startup
   {
@@ -17,8 +19,9 @@ namespace products_service
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+      services.AddOcelot();
     }
-    
+
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -34,6 +37,8 @@ namespace products_service
       {
         endpoints.MapControllers();
       });
+
+      app.UseOcelot().Wait();
     }
   }
 }
