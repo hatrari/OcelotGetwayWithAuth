@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace getway
 {
@@ -20,6 +22,17 @@ namespace getway
     {
       services.AddControllers();
       services.AddOcelot();
+      services.AddAuthentication().AddJwtBearer(Configuration["key"], options => {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+          ValidateIssuerSigningKey = true,
+          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["key"])),
+          ValidateIssuer = false,
+          ValidateAudience = false
+        };
+      });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -30,6 +43,8 @@ namespace getway
       }
 
       app.UseRouting();
+
+      app.UseAuthentication();
 
       app.UseAuthorization();
 
