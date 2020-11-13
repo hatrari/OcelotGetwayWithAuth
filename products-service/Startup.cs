@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using products_service.Models;
 
 namespace products_service
 {
@@ -16,6 +18,7 @@ namespace products_service
     public IConfiguration Configuration { get; }
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddDbContext<ProductsContext>(opt => opt.UseInMemoryDatabase("products"));
       services.AddControllers();
     }
     
