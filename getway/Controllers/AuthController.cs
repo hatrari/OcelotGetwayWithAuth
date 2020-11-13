@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +6,8 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using getway.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace getway.Controllers
 {
@@ -15,16 +16,26 @@ namespace getway.Controllers
     public class AuthController : ControllerBase
     {
       private readonly IConfiguration configuration;
+      private readonly UsersContext _context;
       
-      public AuthController(IConfiguration configuration)
+      public AuthController(IConfiguration configuration, UsersContext context)
       {
         this.configuration = configuration;
+        _context = context;
       }
       
+      [HttpPost("register")]
+      public async Task<IActionResult> Register([FromBody] User user)
+      {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return Ok(user);
+      }
+
       [HttpPost("login")]
       public IActionResult Login([FromBody] User user)
       {
-        if(user.Name != "name" || user.Password != "pass")
+        if(!_context.Users.Any(u => u.Name == user.Name && u.Password == user.Password))
         {
           return Unauthorized();
         }

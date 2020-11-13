@@ -7,6 +7,8 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using getway.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace getway
 {
@@ -20,6 +22,7 @@ namespace getway
     public IConfiguration Configuration { get; }
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddDbContext<UsersContext>(opt => opt.UseInMemoryDatabase("users"));
       services.AddControllers();
       services.AddOcelot();
       services.AddAuthentication().AddJwtBearer(Configuration["key"], options => {
