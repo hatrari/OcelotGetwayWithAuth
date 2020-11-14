@@ -39,13 +39,15 @@ namespace getway.Controllers
         {
           return Unauthorized();
         }
+        user = _context.Users.First(u => u.Name == user.Name && u.Password == user.Password);
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenKey = Encoding.ASCII.GetBytes(configuration["key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
           Subject = new ClaimsIdentity(new Claim[]
           {
-            new Claim(ClaimTypes.Name, user.Name)
+            new Claim(ClaimTypes.Name, user.Name),
+            new Claim("Role", user.Role)
           }),
           Expires = DateTime.UtcNow.AddHours(1),
           SigningCredentials = new SigningCredentials(
