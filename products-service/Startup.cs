@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using products_service.Models;
+using products_service.Repositories;
 
 namespace products_service
 {
@@ -20,6 +21,7 @@ namespace products_service
     {
       services.AddDbContext<ProductsContext>(opt => opt.UseInMemoryDatabase("products"));
       services.AddControllers();
+      services.AddScoped<ProductsRepository, ProductsRepository>();
     }
     
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

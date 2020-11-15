@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 using products_service.Models;
+using products_service.Repositories;
+using System.Linq;
 
 namespace products_service.Controllers
 {
@@ -10,21 +10,20 @@ namespace products_service.Controllers
   [Route("api/[controller]")]
   public class ProductsController : ControllerBase
   {
-    private readonly ProductsContext _context;
+    private readonly ProductsRepository _productsRepository;
 
-    public ProductsController(ProductsContext context)
+    public ProductsController(ProductsRepository productsRepository)
     {
-      _context = context;
+      _productsRepository = productsRepository;
     }
     
     [HttpGet]
-    public IEnumerable<Product> Get() => _context.Products.ToList();
+    public IEnumerable<Product> Get() => _productsRepository.FindAll().ToList();
 
     [HttpPost]
-    public async Task<Product> Post([FromBody] Product product)
+    public Product Post([FromBody] Product product)
     {
-      _context.Products.Add(product);
-      await _context.SaveChangesAsync();
+      _productsRepository.Create(product);
       return product;
     } 
   }
