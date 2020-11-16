@@ -21,7 +21,7 @@ namespace products_service
     {
       services.AddDbContext<ProductsContext>(opt => opt.UseInMemoryDatabase("products"));
       services.AddControllers();
-      services.AddScoped<ProductsRepository, ProductsRepository>();
+      services.AddScoped<IProductRepository, ProductRepository>();
     }
     
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

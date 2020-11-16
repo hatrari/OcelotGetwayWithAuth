@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using products_service.Models;
 using products_service.Repositories;
-using System.Linq;
 
 namespace products_service.Controllers
 {
@@ -10,20 +9,20 @@ namespace products_service.Controllers
   [Route("api/[controller]")]
   public class ProductsController : ControllerBase
   {
-    private readonly ProductsRepository _productsRepository;
+    private readonly IProductRepository _productRepository;
 
-    public ProductsController(ProductsRepository productsRepository)
+    public ProductsController(IProductRepository productRepository)
     {
-      _productsRepository = productsRepository;
+      _productRepository = productRepository;
     }
     
     [HttpGet]
-    public IEnumerable<Product> Get() => _productsRepository.FindAll().ToList();
+    public IEnumerable<Product> Get() => _productRepository.FindAll();
 
     [HttpPost]
     public Product Post([FromBody] Product product)
     {
-      _productsRepository.Create(product);
+      _productRepository.Create(product);
       return product;
     } 
   }
