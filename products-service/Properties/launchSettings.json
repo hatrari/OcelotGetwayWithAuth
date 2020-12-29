@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "products_service": {
+    "ProductsService": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5001",

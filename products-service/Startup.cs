@@ -4,10 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using products_service.Models;
-using products_service.Repositories;
+using ProductsService.Models;
+using ProductsService.Repositories;
 
-namespace products_service
+namespace ProductsService
 {
   public class Startup
   {

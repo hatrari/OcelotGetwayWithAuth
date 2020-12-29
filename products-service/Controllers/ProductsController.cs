@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using products_service.Models;
-using products_service.Repositories;
+using ProductsService.Models;
+using ProductsService.Repositories;
 
-namespace products_service.Controllers
+namespace ProductsService.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]

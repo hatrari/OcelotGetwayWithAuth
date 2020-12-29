@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using products_service.Models;
+using ProductsService.Models;
 
-namespace products_service.Repositories
+namespace ProductsService.Repositories
 {
   public interface IProductRepository
   {
